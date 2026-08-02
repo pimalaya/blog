@@ -18,10 +18,10 @@
           ];
         };
 
-        # The built blog (a static `dist/`), served by Caddy file_server at
-        # blog.pimalaya.org. `nix build` -> ./result = the dist root
+        # The built blog (a static `dist/`), deployed to GitHub Pages at
+        # blog.pimalaya.org by CI. `nix build` -> ./result = the dist root
         # (index.html at its top level, posts at <slug>/index.html, plus
-        # feed.xml and sitemap.xml).
+        # feed.xml and sitemap.xml), for local checks or self-hosting.
         packages.default = pkgs.buildNpmPackage {
           pname = "pimalaya-blog";
           version = "0.1.0";

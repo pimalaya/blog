@@ -37,7 +37,7 @@ To mail the post to the [newsletter](https://buttondown.com/pimalaya), run `npm 
 
 ## Installation
 
-The site is a static bundle any host can serve; Caddy serves it at blog.pimalaya.org in production. Build it only to develop it or host your own copy.
+The site is a static bundle any host can serve; GitHub Pages serves it at blog.pimalaya.org in production. Build it only to develop it or host your own copy.
 
 ### Nix
 

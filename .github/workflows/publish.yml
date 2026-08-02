@@ -1,12 +1,24 @@
 name: publish
 
 # Every push to master rebuilds the static site (pages + feed.xml + sitemap)
-# and deploys it. The newsletter needs no CI step: Buttondown's RSS-to-email
-# automation polls https://blog.pimalaya.org/feed.xml and mails each new post
-# to the announce list on its own.
+# and deploys it to GitHub Pages, served at blog.pimalaya.org (custom domain
+# configured in the repository Pages settings, DNS CNAME to
+# pimalaya.github.io). The newsletter has no CI step: new posts are mailed by
+# hand via `npm run newsletter -- <slug>` (see the README).
 on:
   push:
     branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; let an in-flight production deploy finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -19,21 +31,16 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-pages-artifact@v3
         with:
-          name: dist
           path: dist
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    # TODO: wire the real deployment. The site is a plain static bundle; in
-    # production Caddy serves it at blog.pimalaya.org, so this is either an
-    # rsync to the VPS webroot or a `nix build` pulled from the server side
-    # (like carillon-website). Until then this job just proves the bundle.
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
-      - run: test -f dist/index.html && test -f dist/feed.xml
+      - id: deployment
+        uses: actions/deploy-pages@v4

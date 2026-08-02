@@ -12,7 +12,7 @@ Everything below documents only what differs from the Pimalaya standards.
 
 ## A static blog, not a Rust crate
 
-This repository is a Vite, React and TypeScript static site, not a Rust crate: it publishes no rustdoc, ships no Cargo.toml or deny.toml, and the crate-oriented rules (lib.rs header, no-std, public-item naming) do not apply. It has no backend, no runtime configuration and no tests; it builds to one static bundle in dist/, served by Caddy at blog.pimalaya.org. The shipped pages are JavaScript-free: every page is prerendered at build time and the SPA module script is stripped.
+This repository is a Vite, React and TypeScript static site, not a Rust crate: it publishes no rustdoc, ships no Cargo.toml or deny.toml, and the crate-oriented rules (lib.rs header, no-std, public-item naming) do not apply. It has no backend, no runtime configuration and no tests; it builds to one static bundle in dist/, deployed to GitHub Pages at blog.pimalaya.org by the publish workflow. The shipped pages are JavaScript-free: every page is prerendered at build time and the SPA module script is stripped.
 
 ## Posts are the content, code is the frame
 

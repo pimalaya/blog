@@ -33,6 +33,9 @@ to the newsletter service.
   links are absolute, ending with a link to the canonical article URL
 
 ### Requirement: Deployment target
-The built `dist/` SHALL be served by Caddy at blog.pimalaya.org. The deploy
-job is a placeholder until the hosting side is wired (rsync to the VPS webroot
-or a server-side `nix build`, mirroring the Carillon website).
+The built `dist/` SHALL be deployed to GitHub Pages by the publish workflow
+(actions/upload-pages-artifact + actions/deploy-pages, `github-pages`
+environment) and served at blog.pimalaya.org: the custom domain is configured
+in the repository Pages settings and DNS points blog.pimalaya.org (CNAME) at
+pimalaya.github.io. No CNAME file ships in the artifact; Actions-based Pages
+deployments ignore it.
