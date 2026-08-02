@@ -1,0 +1,39 @@
+name: publish
+
+# Every push to master rebuilds the static site (pages + feed.xml + sitemap)
+# and deploys it. The newsletter needs no CI step: Buttondown's RSS-to-email
+# automation polls https://blog.pimalaya.org/feed.xml and mails each new post
+# to the announce list on its own.
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    # TODO: wire the real deployment. The site is a plain static bundle; in
+    # production Caddy serves it at blog.pimalaya.org, so this is either an
+    # rsync to the VPS webroot or a `nix build` pulled from the server side
+    # (like carillon-website). Until then this job just proves the bundle.
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - run: test -f dist/index.html && test -f dist/feed.xml
