@@ -1,10 +1,14 @@
 ---
 title: Welcome to the Pimalaya blog
-description: If you are new to Pimalaya, take a moment to read this post: you will understand why this blog exists and what it covers.
-date: 2026-08-02
+description: Newcommers, take a moment to read this post: you will understand why this blog exists and what it covers.
+date: 2026-08-03
 ---
 
+## What is Pimalaya
+
 Pimalaya is a project that builds open-source tools for personal information management (also known as PIM), which includes emails, contacts, calendars, tasks and more.
+
+So far we built low-level libraries, CLIs, TUIs, and we plan to expand to Android apps and Native OS applications.
 
 ## Why a blog
 

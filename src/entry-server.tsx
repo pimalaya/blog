@@ -15,8 +15,13 @@ export { buildFeed } from './lib/feed'
 export interface Page {
   /* '' for the index, otherwise the post slug; the page lands at /<slug>/. */
   slug: string
+  /* <title> text; on posts this carries the "— Pimalaya blog" suffix. */
   title: string
+  /* Bare post title for structured data; unset on the index. */
+  headline?: string
   description: string
+  /* YYYY-MM-DD publish date; unset on the index. */
+  date?: string
   appHtml: string
 }
 
@@ -32,7 +37,9 @@ export function renderPages(): { pages: Page[]; posts: Post[] } {
   const articles: Page[] = posts.map((post) => ({
     slug: post.slug,
     title: `${post.title} — Pimalaya blog`,
+    headline: post.title,
     description: post.description,
+    date: post.date,
     appHtml: renderToString(<App url={`/${post.slug}/`} />),
   }))
 

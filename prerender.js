@@ -26,8 +26,8 @@ const { pages } = renderPages()
 // per-page <title>, description, and canonical URL.
 for (const page of pages) {
   const canonical = page.slug ? `${siteUrl}/${page.slug}/` : `${siteUrl}/`
-  const html = template
-    .replace('<!--app-head-->', '')
+  let html = template
+    .replace('<!--app-head-->', pageHead(page, canonical))
     .replace('<!--app-html-->', page.appHtml)
     .replace(/\s*<script type="module"[^>]*><\/script>/g, '')
     .replace(/\s*<link rel="modulepreload"[^>]*>/g, '')
@@ -53,6 +53,14 @@ for (const page of pages) {
       `<meta property="og:url" content="${canonical}" />`,
     )
 
+  // Post pages are articles, not the website itself.
+  if (page.date) {
+    html = html.replace(
+      '<meta property="og:type" content="website" />',
+      '<meta property="og:type" content="article" />',
+    )
+  }
+
   const dir = page.slug ? resolve(dist, page.slug) : dist
   mkdirSync(dir, { recursive: true })
   writeFileSync(resolve(dir, 'index.html'), html)
@@ -64,10 +72,13 @@ writeFileSync(resolve(dist, 'feed.xml'), buildFeed())
 console.log('✓ generated dist/feed.xml')
 
 // --- Sitemap + robots. ---
+// The index moves whenever a post lands, so it inherits the newest post date.
+const newestDate = pages.map((page) => page.date).filter(Boolean).sort().at(-1)
 const urls = pages
   .map((page) => {
     const loc = page.slug ? `${siteUrl}/${page.slug}/` : `${siteUrl}/`
-    return `  <url><loc>${loc}</loc></url>`
+    const lastmod = page.date ?? newestDate
+    return `  <url><loc>${loc}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}</url>`
   })
   .join('\n')
 writeFileSync(
@@ -90,6 +101,54 @@ console.log('✓ generated dist/sitemap.xml + dist/robots.txt')
 
 // The server bundle is a build artefact only; keep it out of the deployed site.
 rmSync(resolve(dist, 'server'), { recursive: true, force: true })
+
+/*
+ * Per-page head bits: JSON-LD structured data on every page (a Blog object on
+ * the index, a BlogPosting per article) plus the article publish date. The
+ * rest of the head (title, description, canonical, Open Graph) is retargeted
+ * from the template above.
+ */
+function pageHead(page, canonical) {
+  const publisher = {
+    '@type': 'Organization',
+    name: 'Pimalaya',
+    url: 'https://pimalaya.org',
+    logo: `${siteUrl}/favicon.svg`,
+  }
+  const data = page.date
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: page.headline,
+        description: page.description,
+        datePublished: page.date,
+        url: canonical,
+        mainEntityOfPage: canonical,
+        image: `${siteUrl}/og.png`,
+        author: publisher,
+        publisher,
+        isPartOf: { '@type': 'Blog', name: 'Pimalaya blog', url: `${siteUrl}/` },
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'Blog',
+        name: 'Pimalaya blog',
+        description: page.description,
+        url: canonical,
+        image: `${siteUrl}/og.png`,
+        publisher,
+      }
+
+  // "</script>" inside a JSON string would end the block early; escape "<".
+  const jsonLd = JSON.stringify(data).replace(/</g, '\\u003c')
+
+  const head = []
+  if (page.date) {
+    head.push(`<meta property="article:published_time" content="${page.date}" />`)
+  }
+  head.push(`<script type="application/ld+json">${jsonLd}</script>`)
+  return head.join('\n    ')
+}
 
 function escapeHtml(text) {
   return text
