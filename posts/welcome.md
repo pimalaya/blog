@@ -1,7 +1,7 @@
 ---
 title: Welcome to the Pimalaya blog
 description: Newcommers, take a moment to read this post: you will understand why this blog exists and what it covers.
-date: 2026-08-03
+date: 2026-08-02
 ---
 
 ## What is Pimalaya
