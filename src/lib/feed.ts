@@ -1,6 +1,6 @@
 /*
  * RSS 2.0 feed for the blog, full article content included. Built from the
- * post data only — never from the build clock — so the output stays
+ * post data only (never from the build clock), so the output stays
  * byte-reproducible. Used by prerender.js (written to dist/feed.xml) and by
  * the dev-server middleware in vite.config.ts (served live at /feed.xml).
  */
@@ -28,7 +28,7 @@ export function buildFeed(): string {
   <channel>
     <title>Pimalaya blog</title>
     <link>${siteUrl}/</link>
-    <description>Half-technical articles on Pimalaya, the open-source PIM tools in Rust.</description>
+    <description>News from Pimalaya, an ambitious project that aims to improve open-source tools related to personal information management.</description>
     <language>en</language>
     <atom:link href="${siteUrl}/feed.xml" rel="self" type="application/rss+xml"/>
     ${posts.length ? `<lastBuildDate>${rfc822(posts[0].date)}</lastBuildDate>` : ''}

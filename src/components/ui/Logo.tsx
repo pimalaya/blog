@@ -2,7 +2,7 @@ import './Logo.css'
 
 /*
  * Pimalaya blog wordmark: the official Pimalaya "P" (from pimalaya/.github
- * logo.svg, pink gradient kept as-is — it is the brand, in both light and dark
+ * logo.svg, pink gradient kept as-is: it is the brand, in both light and dark
  * chrome) beside the name, plus a small "blog" tag. The gradient id is derived
  * from the variant so the nav (light) and footer (dark) instances on one page
  * never collide.

@@ -5,7 +5,7 @@ import { Subscribe } from './Subscribe'
 import './IndexPage.css'
 
 /*
- * The blog front page. The very first post (the oldest — posts are sorted
+ * The blog front page. The very first post (the oldest; posts are sorted
  * newest first) opens the page as a hero and serves as the blog's
  * description; the remaining posts follow as the index, then the subscribe
  * box.

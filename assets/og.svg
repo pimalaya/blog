@@ -32,6 +32,6 @@
 
   <!-- Wordmark + tagline, plum ink on paper. -->
   <text x="470" y="318" font-family="Noto Serif, Georgia, serif" font-weight="700" font-size="88" fill="#301f2a">Pimalaya blog</text>
-  <text x="472" y="392" font-family="Noto Serif, Georgia, serif" font-size="34" fill="#6f5464">Where the project goes</text>
+  <text x="472" y="392" font-family="Noto Serif, Georgia, serif" font-size="34" fill="#6f5464">The project journal</text>
   <text x="472" y="474" font-family="Noto Serif, Georgia, serif" font-size="28" fill="#bf1e83">blog.pimalaya.org</text>
 </svg>

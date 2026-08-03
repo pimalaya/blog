@@ -67,7 +67,7 @@ interface Frontmatter {
 
 /*
  * Minimal frontmatter: a leading `---` block of flat `key: value` string
- * pairs. No YAML lists or nesting — posts only need title, description, date
+ * pairs. No YAML lists or nesting: posts only need title, description, date
  * and the optional draft flag, so a real YAML parser would be dead weight.
  */
 function parseFrontmatter(raw: string, slug: string): { fm: Frontmatter; body: string } {

@@ -2,7 +2,7 @@
  * Design tokens for the Pimalaya blog.
  *
  * The palette derives from the Pimalaya logo gradient (#f193b6 → #e267a3 →
- * #bf1e83): rosy paper, plum ink, magenta accent — the Carillon website's
+ * #bf1e83): rosy paper, plum ink, magenta accent, the Carillon website's
  * letterpress structure re-inked in the brand colours. Everything downstream
  * references these variables, so re-theming is a single-file job.
  */
@@ -23,10 +23,10 @@
   --on-dark-soft: #bb9cad;
 
   /* ---- Accents ---- */
-  --accent: #bf1e83; /* logo magenta — primary brand accent */
+  --accent: #bf1e83; /* logo magenta, primary brand accent */
   --accent-ink: #97156a; /* darker magenta for hover / links */
   --accent-wash: #f7d9ea; /* soft accent background fill */
-  --rose: #e267a3; /* logo mid-pink — secondary tone (highlights on dark) */
+  --rose: #e267a3; /* logo mid-pink, secondary tone (highlights on dark) */
   --green: #3f7d54; /* "available" status */
 
   /* ---- Lines ---- */

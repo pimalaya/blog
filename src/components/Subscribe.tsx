@@ -15,8 +15,8 @@ export function Subscribe() {
         <span className="eyebrow subscribe__eyebrow">Follow along</span>
         <h2 className="subscribe__title">New posts, wherever you read</h2>
         <p className="subscribe__lead">
-          Every article lands in the RSS feed and in your inbox — no tracking,
-          unsubscribe anytime.
+          Every article lands in the RSS feed and in your inbox (no tracking,
+          unsubscribe anytime).
         </p>
 
         <div className="subscribe__actions">
